@@ -1,0 +1,245 @@
+<HTML>
+    <head>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+		<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+		<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+		<!--Override Bootstrap value -->
+		<style type="text/css">
+			table {border-collapse:separate;}
+		</style>
+		<base target="_parent" />
+    </head>
+    <body>
+        <script type='text/javascript'>
+            google.load('visualization', '1', {
+                packages: ['orgchart']
+            });
+            google.setOnLoadCallback(drawChart);
+
+            var chart;
+            var data;
+
+            function drawChart() {
+                data = new google.visualization.DataTable();
+                data.addColumn('string', 'Name');
+                data.addColumn('string', 'Manager');
+                data.addColumn('string', 'ToolTip');
+                data.addRows([
+					[{
+                        v: 'Capitalist Paradise',
+                        f: '<b><i>Capitalist Paradise Government</i></b>'
+                    }, '', 'Capitalist Paradise'],
+                    [{
+                        v: 'Executive Branch',
+                        f: '<b>Executive Branch</b>'
+                    }, 'Capitalist Paradise', 'Executive Branch'],
+                    [{
+                        v: 'Acario',
+                        f: '<a href="https://nationstates.net/nation=Acario" target="_blank">Acario</a><div style="color:green; font-style:italic">Delegate</div>'
+                    }, 'Executive Branch', 'The Delegate'],
+                    [{
+                        v: 'The-CID',
+                        f: '<a href="https://nationstates.net/nation=The-CID" target="_blank">The-CID</a><div style="color:green; font-style:italic">Founder</div>'
+                    }, 'Executive Branch', 'The Founder'],
+                    [{
+                        v: 'Sucrati',
+                        f: '<a href="https://nationstates.net/nation=Sucrati" target="_blank">Sucrati</a><div style="color:green; font-style:italic">Minister of Interior</div>'
+                    }, 'Acario', 'Minister of Interior'],
+                    [{
+                        v: 'New Cathedra',
+                        f: '<div style="color:green;"><a href="http://nationstates.net/nation=new_cathedra" target="_blank">New Cathedra</a></div><div style="color:green; font-style:italic">Minister of Foreign Affairs</div>'
+                    }, 'Acario', 'Minister of Foreign Affairs'],
+                    [{
+                        v: 'Vacant_MoD',
+                        f: 'Peacetime<div style="color:green; font-style:italic">Minister of Defense</div>'
+                    }, 'Acario', 'Minister of Defense'],
+                    [{
+                        v: 'Legislative Branch',
+                        f: '<b>Legislative Branch</b>'
+                    }, 'Capitalist Paradise', 'Legislative Branch'],
+                    [{
+                        v: 'LadyFasterKittens',
+                        f: '<a href="http://nationstates.net/nation=LadyFasterKittens" target="_blank">LadyFasterKittens</a><div style="color:green; font-style:italic">President of Legislature</div>'
+                    }, 'Legislative Branch', 'President of Legislature'],
+                    [{
+                        v: 'Legislature',
+                        f: '<a href="http://nationstates.net/?region=capitalist_paradise" target="_blank">Capitalist Paradise</a><div style="color:green; font-style:italic">Legislature</div>'
+                    }, 'LadyFasterKittens', 'Legislature'],
+                    [{
+                        v: 'Judicial Branch',
+                        f: '<b>Judicial Branch</b>'
+                    }, 'Capitalist Paradise', 'Judicial Branch'],
+                    [{
+                        v: 'Panageadom',
+                        f: '<a href="http://nationstates.net/nation=Panageadom" target="_blank">Panageadom</a><div style="color:green; font-style:italic">Chief Justice</div>'
+                    }, 'Judicial Branch', 'Chief Justice'],
+                    [{
+                        v: 'Repentant Jihadi',
+                        f: '<a href="http://nationstates.net/nation=Repentant_Jihadi" target="_blank">Repentant Jihadi</a><div style="color:green; font-style:italic">Justice</div>'
+                    }, 'Panageadom', 'Justice'],
+                    [{
+                        v: 'Capitalist Producers',
+                        f: '<a href="http://nationstates.net/nation=Capitalist_Producers" target="_blank">Capitalist Producers</a><div style="color:green; font-style:italic">Justice</div>'
+                    }, 'Panageadom', 'Justice'],
+					 [{
+                        v: 'Nation of Quebec',
+                        f: '<a href="http://nationstates.net/nation=Nation_of_Quebec" target="_blank">Nation of Quebec</a><div style="color:green; font-style:italic">Alternate Justice</div>'
+                    }, 'Panageadom', 'Alternative Justice'],
+					[{
+                        v: 'Northern Borland',
+                        f: '<a href="http://nationstates.net/nation=Northern_Borland" target="_blank">Northern Borland</a><div style="color:green; font-style:italic">Advocate and Arbiter General</div>'
+                    }, 'Judicial Branch', 'Advocate and Arbiter General'],
+                    ]);
+                chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
+                chart.draw(data, {
+                    allowHtml: true
+                });
+
+                google.visualization.events.addListener(chart, 'select', selectHandler);
+				
+				chart.setSelection([{row:0,column:null}]);
+				selectHandler();
+            }
+			
+			function openPage() {
+				$.get("/forums/pages/constitution/", function(response) {
+					$('#magicBox').html(response);
+				});
+			}
+			
+			function timeConverter(UNIX_timestamp) {
+				var a = new Date(UNIX_timestamp * 1000);
+				var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+				var year = a.getFullYear();
+				var month = months[a.getMonth()];
+				var date = a.getDate();
+				var hour;
+				var ampm;
+				if (a.getHours() == 0) {
+					hour = 12;
+					ampm = "AM";
+				} else if (a.getHours() <= 12) {
+					hour = a.getHours();
+					ampm = a.getHours() < 12 ? "AM" : "PM";
+				} else {
+					hour = a.getHours() - 12;
+					ampm = "PM";
+				}
+				var min = a.getMinutes();
+				if (min < 10) {
+					min = "0" + min;
+				}
+				var sec = a.getSeconds();
+				if (sec < 10) {
+					sec = "0" + sec;
+				}
+				var time = month + ' ' + date + ', ' + year + ' at ' + hour + ':' + min + ':' + sec + ' ' + ampm;
+				return time;
+        }
+
+            function selectHandler() {
+                var selection = chart.getSelection();
+				console.log(selection);
+                for (var i = 0; i < selection.length; i++) {
+                    var item = selection[i];
+                   if (item.row != null) {
+						var value = data.getFormattedValue(item.row, 0);
+						console.log(value);
+						var description = document.getElementById("item_desc");
+						var timeNow = new Date().getTime() / 1000;
+						//Main Government Heading
+                        if (value == "<b><i>Capitalist Paradise Government</i></b>") {
+							description.innerHTML = "<b>The Capitalist Paradise</b> was founded on June 28th 2003 by <i>Migard X</i>. Under Migard Xs leadership, the region grew to over 100 nations." + 
+							" In September of 2004, Migard X ceased to exist, and the region dwindled. Migard Xwas succeeded by many weak and ineffective administrations. Immediately " +
+							"Migard X's departure, <i>CrystalPalace</i> led the region. The region continued to decrease in strength, falling to 51 nations strong. In November 2004, the " + 
+							"Capitalist Paradise was invaded by the <i>DEN Army</i>, and captured. The DEN Army held the region for three days before the <i>Ten Thousand Island Treaty Organization</i>" +
+							" (TITO) defensive forces managed to liberate the region. The region continued to dwindle, with <i>Libertariancanuckista</i> following CrystalPalace's delegacy. " + 
+							"Only a few months later, in November 2004, the DEN Army again launched an invasion against the region...<br/>" + 
+							"<a href='http://capitalistparadise.com/forums/threads/history-of-the-capitalist-paradise-2003-2011.8/'><i>Continue Reading the History of the Capitalist Paradise</i></a>";
+						} else if (value == "<b>Executive Branch</b>") {
+							description.innerHTML = "<b>The Executive Branch</b> is run by the <i><a href='http://capitalistparadise.com/forums/pages/constitution/#The_Executive_'>World Assembly Delegate</a></i>," +
+							" and includes all of the cabinet positions. Ministers are appointed by the <i>World Assembly Delegate</i> and may be replaced at any time. The Executive Branch's duties include " +
+							"enforcement of the Constitution, defense of the region, and management of day to day regional operations.";
+						} else if (value.indexOf(">Delegate") > -1) {
+							var lastElection = 1398470400;
+							var nextElection = lastElection + 90 * 24 * 60 * 60;
+							description.innerHTML = "The <b>World Assembly Delegate</b> is the head of the <u>The Executive Branch</u>. The Delegate serves an indefinite term of service, but may be challenged" + 
+							" every 90 days by any qualified candidate. Responsibilities include representation of the region to the <i>World Assembly</i>, overseeing the cabinet members, and enforcement of the " +
+							"constitution.";
+							
+							var challenge = "<br/><br/><p><b>Last Election: "  + timeConverter(lastElection);
+							if (timeNow >= nextElection) {
+								challenge += "<br/>Next Election: ANYTIME</b></p>";
+							} else {
+								challenge += "<br/>Next Election: " + timeConverter(nextElection) + "</b></p>";
+							}
+							description.innerHTML += challenge;
+						} else if (value.indexOf("Minister of Interior") > -1) {
+							description.innerHTML = "The <b>Minister of the Interior</b> is appointed by the the <i><a href='http://capitalistparadise.com/forums/pages/constitution/#The_Executive_'>World Assembly Delegate</a></i>. The Minister of the Interior handles intra-regional affairs, which " +
+							"include monitoring the Regional Message Board and Regional Forums, recruiting and nation retention efforts and handling of regional queries and complaints.";
+						} else if (value.indexOf("Minister of Foreign Affairs") > -1) {
+							description.innerHTML = "The <b>Minister of Foreign Affairs</b> is appointed by the the <i><a href='http://capitalistparadise.com/forums/pages/constitution/#The_Executive_'>World Assembly Delegate</a></i>. The Minister of Foreign Affairs handles extra-regional affairs, which " +
+							"include the appointment of Ambassadors, maintaining dialogue between embassies, and investigation and creation of additional diplomatic efforts.";
+						} else if (value.indexOf("Minister of Defense") > -1) {
+							description.innerHTML = "The <b>Minister of Defense</b> is a temporary position, filled only when the region is under threat of invasion. The Minister of Defense is appointed by the <i><a href='http://capitalistparadise.com/forums/pages/constitution/#The_Executive_'>World Assembly Delegate</a></i>, and duties include marshaling a defensive force from within the region and creation of a retaliation force.";
+						} else if (value.indexOf("Founder") > -1) {
+							description.innerHTML = "The <b>Founder</b> is the creator of the Capitalist Paradise region. The Founder has no ordinary duties or responsibilities, and only uses administration powers" +
+							" in an extreme event. The Founder acts as a safegaurd against the possibility of an invasion, or to intervene in the event of an abusive regional administration.";
+						} else if (value == "<b>Legislative Branch</b>") {
+							description.innerHTML = "<b>The Legislative Branch</b> represents the entire body of Capitalist Paradise nations who have been residents for at least 15 consecutive days. Any nation " +
+							"may author and present legislation to the <i><a href='http://capitalistparadise.com/forums/pages/constitution/#The_Legislative'>President of the Legislature</a></i> for consideration and voting. The President of the Legislature oversees the voting process and presents bills" +
+							" to the legislative body for voting.";
+						} else if (value.indexOf("President of Legislature") > -1) {
+							var lastElection = 1384146000;
+							var nextElection = lastElection + 90 * 24 * 60 * 60;
+							
+							description.innerHTML = "The <b>President of Legislature</b> is elected by the legislative body and serves an indefinite term of service, but may be challenged every 90 days by any" +
+							" qualified candidate. Responsabilities include overseeing presentation of legislation to the region and managing the voting process for legislative matters.";
+							
+							var challenge = "<br/><br/><p><b>Last Election: "  + timeConverter(lastElection);
+							if (timeNow >= nextElection) {
+								challenge += "<br/>Next Election: ANYTIME</b></p>";
+							} else {
+								challenge += "<br/>Next Election: " + timeConverter(nextElection) + "</b></p>";
+							}
+							description.innerHTML += challenge;
+						} else if (value.indexOf(">Legislature</div>") > -1) {
+							description.innerHTML = "The <b>Legislature</b> is made up of all of the nations who have resided in the <u>Capitalist Paradise</u> for at least 15 consecutive days." +
+							" Nations in the legislature may author and submit potential legislation to the <u>President of Legislature</u> for review and voting before the entire region.";
+						} else if (value == "<b>Judicial Branch</b>") {
+							description.innerHTML = "<b>The Judicial Branch</b> is made up of the Supreme Court. The court exists to review and arbitrate in disputes between nations, as well as the " +
+							"actions of the <u>Executive Branch</u>. The Court is made up of 3 justices who are appointed for life or until retirement. In the event of a vacancy, the Alternate Justice " +
+							"replaces the vacant seat.";
+						} else if (value.indexOf("Chief Justice") > -1) {
+							description.innerHTML = "The <b>Chief Justice</b> leads the panel of judges. Advancement to the position of Chief Justice is by seniority.";
+							description.innerHTML += "<p>A <b>Justice</b> resolves civil disputes among member nations, hears criminal cases, and refers guilty parties to the <i>World Assembly Delegate</i>.</p>";
+						} else if (value.indexOf("Justice") > -1) {
+							description.innerHTML = "A <b>Justice</b> resolves civil disputes among member nations, hears criminal cases, and refers guilty parties to the <i>World Assembly Delegate</i>. ";
+						} else if (value.indexOf("Advocate and Arbiter General") > -1) {
+							description.innerHTML = "The <b>Advocate and Arbiter General</b> is elected by the legislature and servers a 90 day term. After this term the office is open to challenge by any" +
+							" resident nation. Responsibilities include representing defendants in all criminal cases, resolving civil disputes between members, and provide final appeals to the delegate.";
+							
+							var lastElection = 1314853200;
+							var nextElection = lastElection + 90 * 24 * 60 * 60;
+							var challenge = "<br/><br/><p><b>Last Election: "  + timeConverter(lastElection);
+							if (timeNow >= nextElection) {
+								challenge += "<br/>Next Election: ANYTIME</b></p>";
+							} else {
+								challenge += "<br/>Next Election: " + timeConverter(nextElection) + "</b></p>";
+							}
+							description.innerHTML += challenge;
+						}
+                    }
+                }
+            }
+        </script>
+        <div id='chart_div'></div>
+		<div id='description'><h2>Description:</h2>
+			<p><div id='item_desc'>
+				
+			</div></p>
+		</div>
+    </body>
+
+</HTML>
