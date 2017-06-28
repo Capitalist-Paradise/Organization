@@ -51,10 +51,6 @@
                         f: '<div style="color:green;"><a href="http://nationstates.net/nation=the_united_oman" target="_blank">The United Oman</a></div><div style="color:green; font-style:italic">Minister of Foreign Affairs</div>'
                     }, 'Acario', 'Minister of Foreign Affairs'],
                     [{
-                        v: 'The Zu Islands',
-                        f: '<div style="color:green;"><a href="http://nationstates.net/nation=the_zu_islands" target="_blank">The Zu Islands</a></div><div style="color:green; font-style:italic">Chief Editor</div>'
-                    }, 'Acario', 'Chief Editor'],
-                    [{
                         v: 'Vacant_MoD',
                         f: 'Peacetime<div style="color:green; font-style:italic">Minister of Defense</div>'
                     }, 'Acario', 'Minister of Defense'],
@@ -63,37 +59,33 @@
                         f: '<b>Legislative Branch</b>'
                     }, 'Capitalist Paradise', 'Legislative Branch'],
                     [{
-                        v: 'LadyFasterKittens',
-                        f: '<a href="http://nationstates.net/nation=LadyFasterKittens" target="_blank">LadyFasterKittens</a><div style="color:green; font-style:italic">President of Legislature</div>'
-                    }, 'Legislative Branch', 'President of Legislature'],
+                        v: 'MoI',
+                        f: 'MoI<div style="color:green; font-style:italic">Minister of Interior</div>'
+                    }, 'Legislative Branch', 'Minister of Interior'],
                     [{
                         v: 'Legislature',
                         f: '<a href="http://nationstates.net/?region=capitalist_paradise" target="_blank">Capitalist Paradise</a><div style="color:green; font-style:italic">Legislature</div>'
-                    }, 'LadyFasterKittens', 'Legislature'],
+                    }, 'MoI', 'Legislature'],
+                    [{
+			v: 'CE',
+                        f: 'Vacant CE<div style="color:green; font-style:italic">Chief Editor</div>'
+                    }, 'MoI', 'Chief Editor'],
                     [{
                         v: 'Judicial Branch',
                         f: '<b>Judicial Branch</b>'
                     }, 'Capitalist Paradise', 'Judicial Branch'],
                     [{
-                        v: 'Repentant Jihadi',
-                        f: '<a href="http://nationstates.net/nation=Repentant_Jihadi" target="_blank">Repentant Jihadi</a><div style="color:green; font-style:italic">Chief Justice</div>'
-                    }, 'Judicial Branch', 'Chief Justice'],
-                    [{
-                        v: 'Nation of Quebec',
-                        f: '<a href="http://nationstates.net/nation=Nation_of_Quebec" target="_blank">Nation of Quebec</a><div style="color:green; font-style:italic">Justice</div>'
-                    }, 'Repentant Jihadi', 'Justice'],
-                    [{
-                        v: 'Kaputer',
-                        f: '<a href="http://nationstates.net/nation=Kaputer" target="_blank">Kaputer</a><div style="color:green; font-style:italic">Justice</div>'
-                    }, 'Repentant Jihadi', 'Justice'],
-					 [{
-                        v: 'Armus Republic',
-                        f: '<a href="http://nationstates.net/nation=armus_republic" target="_blank">Armus Republic</a><div style="color:green; font-style:italic">Alternate Justice</div>'
-                    }, 'Repentant Jihadi', 'Alternative Justice'],
-					[{
+                        v: 'The Court',
+                        f: 'Appointed at the start of a trial<div style="color:green; font-style:italic">The Court</div>'
+                    }, 'Judicial Branch', 'The Court'],
+	            [{
                         v: 'Northern Borland',
                         f: '<a href="http://nationstates.net/nation=Northern_Borland" target="_blank">Northern Borland</a><div style="color:green; font-style:italic">Advocate and Arbiter General</div>'
                     }, 'Judicial Branch', 'Advocate and Arbiter General'],
+	            [{
+                        v: 'Vacant_Prosecutor',
+                        f: 'Appointed at the start of a trial<div style="color:green; font-style:italic">Prosecutor</div>'
+                    }, 'Judicial Branch', 'Prosecutor'],
                     ]);
                 chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
                 chart.draw(data, {
@@ -163,7 +155,7 @@
 							"<a href='http://capitalistparadise.com/forums/threads/history-of-the-capitalist-paradise-2003-2011.8/'><i>Continue Reading the History of the Capitalist Paradise</i></a>";
 						} else if (value == "<b>Executive Branch</b>") {
 							description.innerHTML = "<b>The Executive Branch</b> is run by the <i><a href='http://capitalistparadise.com/forums/pages/constitution/#The_Executive_'>World Assembly Delegate</a></i>," +
-							" and includes all of the cabinet positions. Ministers are appointed by the <i>World Assembly Delegate</i> and may be replaced at any time. The Executive Branch's duties include " +
+							"and the Ministers. The Executive Branch's duties include " +
 							"enforcement of the Constitution, defense of the region, and management of day to day regional operations.";
 						} else if (value.indexOf(">Delegate") > -1) {
 							var lastElection = 1398470400;
